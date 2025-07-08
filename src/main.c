@@ -87,7 +87,6 @@ void app_main() {
                 break;
 
         }
-        vTaskDelay(pdMS_TO_TICKS(3000));
     }
     return;
 }
