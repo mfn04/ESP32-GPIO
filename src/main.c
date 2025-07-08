@@ -10,6 +10,8 @@
 #define HIGH 1
 #define LOW 0
 
+#define SCALE 1
+
 typedef enum {
     RED,
     YELLOW,
@@ -33,9 +35,9 @@ static void register_led(short pin){
 
 void blink_green(){
     gpio_set_level(GREEN_PIN, LOW);
-    vTaskDelay(pdMS_TO_TICKS(1000));
+    vTaskDelay(pdMS_TO_TICKS(1000*SCALE));
     gpio_set_level(GREEN_PIN, HIGH);
-    vTaskDelay(pdMS_TO_TICKS(1000));
+    vTaskDelay(pdMS_TO_TICKS(1000*SCALE));
 }
 
 void green_blink_controller(){
@@ -59,7 +61,7 @@ void app_main() {
                 gpio_set_level(RED_PIN, HIGH);
                 gpio_set_level(YELLOW_PIN, LOW);
                 gpio_set_level(GREEN_PIN, LOW);
-                vTaskDelay(pdMS_TO_TICKS(10000));
+                vTaskDelay(pdMS_TO_TICKS(5000*SCALE));
                 break;
             case YELLOW:
                 curr_state = (prev_state == RED) ? GREEN : RED;
@@ -67,7 +69,7 @@ void app_main() {
                 gpio_set_level(RED_PIN, LOW);
                 gpio_set_level(YELLOW_PIN, HIGH);
                 gpio_set_level(GREEN_PIN, LOW);
-                vTaskDelay(pdMS_TO_TICKS(3000));
+                vTaskDelay(pdMS_TO_TICKS(2000*SCALE));
                 break;
             case GREEN:
                 curr_state = YELLOW;
@@ -75,7 +77,7 @@ void app_main() {
                 gpio_set_level(RED_PIN, LOW);
                 gpio_set_level(YELLOW_PIN, LOW);
                 gpio_set_level(GREEN_PIN, HIGH);
-                vTaskDelay(pdMS_TO_TICKS(10000));
+                vTaskDelay(pdMS_TO_TICKS(5000*SCALE));
                 green_blink_controller();
                 break;
             default:
